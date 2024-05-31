@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function {{pascalCase name}}() {
+function Customers() {
     const [items, setItems] = useState([]);
     const [form, setForm] = useState({});
 
@@ -10,7 +10,7 @@ function {{pascalCase name}}() {
     }, []);
 
     const fetchItems = async () => {
-        const response = await axios.get(`/api/{{camelCase name}}`);
+        const response = await axios.get(`/api/customers`);
         setItems(response.data);
     };
 
@@ -23,18 +23,18 @@ function {{pascalCase name}}() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await axios.post(`/api/{{camelCase name}}`, form);
+        await axios.post(`/api/customers`, form);
         fetchItems();
     };
 
     const handleDelete = async (id) => {
-        await axios.delete(`/api/{{camelCase name}}/${id}`);
+        await axios.delete(`/api/customers/${id}`);
         fetchItems();
     };
 
     return (
         <div>
-            <h1>{{pascalCase name}}</h1>
+            <h1>Customers</h1>
             <form onSubmit={handleSubmit}>
                 <input name="name" onChange={handleChange} placeholder="Name" />
                 <button type="submit">Add</button>
@@ -50,4 +50,4 @@ function {{pascalCase name}}() {
     );
 }
 
-export default {{pascalCase name}};
+export default Customers;

@@ -1,37 +1,37 @@
-const { camelCase, pascalCase, lowerCase } = require('change-case');
+const fs = require('fs');
+const path = require('path');
+const { pascalCase, camelCase } = require('change-case');
 
 module.exports = function (plop) {
-    const models = [
-        'Customer',
-        'CustomerEmailDomain',
-        'CustomersBuyboxRegion',
-        'CustomersEin',
-        'Deal',
-        'DealsListing',
-        'Listing',
-        'ListingProperty',
-        'Market',
-        'Property',
-        'PropertyEvent',
-        'PropertyPhoto',
-        'PropertySnapshot',
-        'Setting',
-        'User'
-    ];
+    const modelsDir = path.join(__dirname, 'models');
+    const models = fs.readdirSync(modelsDir)
+        .filter(file => file.indexOf('.') !== 0 && file !== 'index.js' && file !== 'init-models.js')
+        .map(file => file.replace('.js', ''));
+
+    console.log('Detected models:', models); // Debugging line
 
     plop.setHelper('pascalCase', (text) => {
-        console.log(`Converting ${text} to PascalCase: ${pascalCase(text)}`);
+        console.log(`pascalCase helper called with text: ${text}`); // Debugging line
         return pascalCase(text);
     });
-    plop.setHelper('lowerCase', (text) => {
-        console.log(`Converting ${text} to LowerCase: ${lowerCase(text)}`);
-        return lowerCase(text);
+
+    plop.setHelper('camelCase', (text) => {
+        console.log(`camelCase helper called with text: ${text}`); // Debugging line
+        return camelCase(text);
     });
 
     models.forEach((model) => {
+        console.log('Setting up generator for model:', model); // Debugging line
         plop.setGenerator(model, {
-            description: `generate a CRUD React component for ${model} Matt`,
-            prompts: [],
+            description: `generate a CRUD React component for ${model}`,
+            prompts: [
+                {
+                    type: 'input',
+                    name: 'name',
+                    message: 'Model name?',
+                    default: model
+                }
+            ],
             actions: [
                 {
                     type: 'add',

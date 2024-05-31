@@ -1,24 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import Markets from './components/Markets'; // Adjust the path as needed
+import Customers from './components/Customers'; // Adjust the path as needed
+import Deals from './components/Deals'; // Adjust the path as needed
 
 function App() {
-    const [message, setMessage] = useState('');
-
-    useEffect(() => {
-        axios.get('/')
-            .then(response => {
-                setMessage(response.data);
-            })
-            .catch(error => {
-                console.error('There was an error fetching the data!', error);
-            });
-    }, []);
-
-    return (
-        <div className="App">
-            <h1>{message}</h1>
-        </div>
-    );
+  return (
+    <div className="App">
+      <Markets />
+      {/* <Customers />
+      <Deals /> */}
+    </div>
+  );
 }
 
 export default App;
